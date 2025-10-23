@@ -8,6 +8,7 @@ import Input from '@/app/components/Input'
 import Button from '@/app/components/Button'
 import Alert from '@/app/components/Alert'
 import Card from '@/app/components/Card'
+import ThemeToggle from '@/app/components/ThemeToggle'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -74,11 +75,12 @@ export default function RegisterPage() {
   }
   
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900 px-4 transition-colors duration-200">
+      <ThemeToggle />
       <Card className="w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800">🚗 Quilometragem</h1>
-          <p className="text-gray-600 mt-2">Crie sua conta</p>
+          <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100">🚗 Quilometragem</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-2">Crie sua conta</p>
         </div>
         
         {error && (
@@ -143,9 +145,9 @@ export default function RegisterPage() {
         </form>
         
         <div className="mt-6 text-center">
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             Já tem uma conta?{' '}
-            <Link href="/login" className="text-primary-600 hover:underline font-medium">
+            <Link href="/login" className="text-primary-600 dark:text-primary-400 hover:underline font-medium">
               Entre
             </Link>
           </p>
