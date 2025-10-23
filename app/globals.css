@@ -42,9 +42,24 @@ body {
            bg-white text-gray-900 border-gray-300 
            placeholder:text-gray-500
            focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent
-           dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 
+           dark:bg-gray-700 dark:text-white dark:border-gray-600 
            dark:placeholder:text-gray-400
+           disabled:opacity-50 disabled:cursor-not-allowed
            transition-colors duration-200;
+  }
+  
+  /* Ensure select elements have the same styling */
+  select.input {
+    @apply appearance-none cursor-pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+  }
+  
+  .dark select.input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%9ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
   }
   
   .card {
@@ -60,15 +75,21 @@ body {
 .dark input:-webkit-autofill,
 .dark input:-webkit-autofill:hover,
 .dark input:-webkit-autofill:focus,
-.dark input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px #1f2937 inset !important;
-  -webkit-text-fill-color: #f3f4f6 !important;
+.dark input:-webkit-autofill:active,
+.dark select:-webkit-autofill,
+.dark textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 30px #374151 inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+input:-webkit-autofill:active,
+select:-webkit-autofill,
+textarea:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px white inset !important;
   -webkit-text-fill-color: #111827 !important;
+  transition: background-color 5000s ease-in-out 0s;
 }

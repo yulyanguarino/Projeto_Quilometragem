@@ -9,6 +9,7 @@ import Input from '@/app/components/Input'
 import Textarea from '@/app/components/Textarea'
 import Alert from '@/app/components/Alert'
 import Loading from '@/app/components/Loading'
+import ThemeToggle from '@/app/components/ThemeToggle'
 import { formatDate, formatKm } from '@/lib/utils'
 import { Download, Plus, LogOut, QrCode, Edit, Trash2, History } from 'lucide-react'
 
@@ -182,12 +183,13 @@ export default function DashboardPage() {
   }
   
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 transition-colors duration-200">
+      <ThemeToggle />
       {/* Header */}
-      <header className="bg-white shadow-sm">
+      <header className="bg-white dark:bg-gray-800 shadow-sm transition-colors duration-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-800">🚗 Quilometragem Veicular</h1>
+            <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100">🚗 Quilometragem Veicular</h1>
             <div className="flex gap-2">
               <Button variant="secondary" onClick={showQRCode}>
                 <QrCode className="w-4 h-4 inline mr-2" />
@@ -343,51 +345,51 @@ export default function DashboardPage() {
         {/* Records Table */}
         <Card title="Registros de Quilometragem">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Condutor</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Placa</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Saída</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Chegada</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Distância</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Condutor</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Placa</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Saída</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Chegada</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Distância</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Ações</th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {records.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-4 text-center text-gray-500">
+                    <td colSpan={6} className="px-6 py-4 text-center text-gray-500 dark:text-gray-400">
                       Nenhum registro encontrado
                     </td>
                   </tr>
                 ) : (
                   records.map((record) => (
-                    <tr key={record.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">{record.driverName}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{record.vehicle?.licensePlate}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">{formatDate(record.departureDate)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm">{formatDate(record.arrivalDate)}</td>
-                      <td className="px-6 py-4 whitespace-nowrap font-semibold">{formatKm(record.distanceTraveled)}</td>
+                    <tr key={record.id} className="hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">{record.driverName}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-gray-900 dark:text-gray-100">{record.vehicle?.licensePlate}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{formatDate(record.departureDate)}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-700 dark:text-gray-300">{formatDate(record.arrivalDate)}</td>
+                      <td className="px-6 py-4 whitespace-nowrap font-semibold text-gray-900 dark:text-gray-100">{formatKm(record.distanceTraveled)}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleEdit(record)}
-                            className="text-blue-600 hover:text-blue-900"
+                            className="text-blue-600 hover:text-blue-900 dark:text-blue-400 dark:hover:text-blue-300"
                             title="Editar"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => loadHistory(record.id)}
-                            className="text-green-600 hover:text-green-900"
+                            className="text-green-600 hover:text-green-900 dark:text-green-400 dark:hover:text-green-300"
                             title="Histórico"
                           >
                             <History className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleDelete(record.id)}
-                            className="text-red-600 hover:text-red-900"
+                            className="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
                             title="Deletar"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -404,33 +406,33 @@ export default function DashboardPage() {
         
         {/* History Modal */}
         {showHistory && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+          <div className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 flex items-center justify-center p-4 z-50">
             <Card className="max-w-2xl w-full max-h-[80vh] overflow-y-auto">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-semibold">Histórico de Alterações</h3>
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Histórico de Alterações</h3>
                 <button
                   onClick={() => setShowHistory(null)}
-                  className="text-2xl font-bold hover:opacity-70"
+                  className="text-2xl font-bold hover:opacity-70 text-gray-600 dark:text-gray-400"
                 >
                   ×
                 </button>
               </div>
               
               {history.length === 0 ? (
-                <p className="text-gray-500">Nenhuma alteração registrada</p>
+                <p className="text-gray-500 dark:text-gray-400">Nenhuma alteração registrada</p>
               ) : (
                 <div className="space-y-3">
                   {history.map((item) => (
-                    <div key={item.id} className="border-l-4 border-primary-500 pl-4 py-2">
-                      <div className="text-sm text-gray-600">{formatDate(item.changeDate)}</div>
-                      <div className="font-medium">{item.fieldChanged}</div>
+                    <div key={item.id} className="border-l-4 border-primary-500 pl-4 py-2 bg-gray-50 dark:bg-gray-700 rounded">
+                      <div className="text-sm text-gray-600 dark:text-gray-400">{formatDate(item.changeDate)}</div>
+                      <div className="font-medium text-gray-900 dark:text-gray-100">{item.fieldChanged}</div>
                       <div className="text-sm">
-                        <span className="text-red-600">{item.previousValue}</span>
-                        {' → '}
-                        <span className="text-green-600">{item.newValue}</span>
+                        <span className="text-red-600 dark:text-red-400">{item.previousValue}</span>
+                        <span className="text-gray-600 dark:text-gray-400">{' → '}</span>
+                        <span className="text-green-600 dark:text-green-400">{item.newValue}</span>
                       </div>
                       {item.user && (
-                        <div className="text-xs text-gray-500 mt-1">
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                           Por: {item.user.name || item.user.email}
                         </div>
                       )}
