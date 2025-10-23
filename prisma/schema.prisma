@@ -1,0 +1,88 @@
+// Schema do Prisma para Sistema de Quilometragem Veicular
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelo de Usuário
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  password      String
+  role          String    @default("user") // "admin" ou "user"
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relações
+  records       Record[]
+  changeHistories ChangeHistory[]
+  
+  @@map("users")
+}
+
+// Modelo de Veículo
+model Vehicle {
+  id            String    @id @default(cuid())
+  licensePlate  String    @unique
+  brand         String?
+  model         String?
+  year          Int?
+  color         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  // Relações
+  records       Record[]
+  
+  @@map("vehicles")
+}
+
+// Modelo de Registro de Quilometragem
+model Record {
+  id                  String    @id @default(cuid())
+  vehicleId           String
+  userId              String?
+  driverName          String
+  departureDate       DateTime
+  arrivalDate         DateTime
+  initialKm           Float
+  finalKm             Float
+  distanceTraveled    Float
+  purpose             String?   // Motivo/descrição do uso
+  observations        String?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  
+  // Relações
+  vehicle             Vehicle   @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  user                User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  changeHistories     ChangeHistory[]
+  
+  @@map("records")
+  @@index([vehicleId])
+  @@index([userId])
+}
+
+// Modelo de Histórico de Alterações
+model ChangeHistory {
+  id              String    @id @default(cuid())
+  recordId        String
+  userId          String?
+  fieldChanged    String    // Nome do campo alterado
+  previousValue   String?   // Valor anterior
+  newValue        String?   // Novo valor
+  changeDate      DateTime  @default(now())
+  
+  // Relações
+  record          Record    @relation(fields: [recordId], references: [id], onDelete: Cascade)
+  user            User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  @@map("change_histories")
+  @@index([recordId])
+}
