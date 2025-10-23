@@ -1,0 +1,116 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚗 Quilometragem Veicular</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚗 Quilometragem Veicular</h1>
+            <div class="header-buttons">
+                <button id="qrCodeBtn" class="btn btn-secondary">📱 QR Code</button>
+                <button id="logoutBtn" class="btn btn-secondary">🚪 Sair</button>
+            </div>
+        </header>
+
+        <div class="toolbar">
+            <button id="novoRegistroBtn" class="btn btn-primary">➕ Novo Registro</button>
+            <button id="exportarCSV" class="btn btn-dark">⬇️ Exportar CSV</button>
+            <button id="exportarExcel" class="btn btn-dark">⬇️ Exportar Excel</button>
+            <button id="exportarPDF" class="btn btn-dark">⬇️ Exportar PDF</button>
+        </div>
+
+        <div class="filters">
+            <input type="text" id="filtroCondutor" placeholder="Filtrar por condutor..." class="form-control">
+            <input type="text" id="filtroPlaca" placeholder="Filtrar por placa..." class="form-control">
+            <input type="date" id="filtroDataInicio" class="form-control">
+            <input type="date" id="filtroDataFim" class="form-control">
+            <button id="aplicarFiltros" class="btn btn-secondary">🔍 Filtrar</button>
+            <button id="limparFiltros" class="btn btn-secondary">🔄 Limpar</button>
+        </div>
+
+        <div class="table-container">
+            <h3>Registros de Quilometragem</h3>
+            <table id="tabelaRegistros">
+                <thead>
+                    <tr>
+                        <th>CONDUTOR</th>
+                        <th>PLACA</th>
+                        <th>SAÍDA</th>
+                        <th>CHEGADA</th>
+                        <th>DISTÂNCIA</th>
+                        <th>AÇÕES</th>
+                    </tr>
+                </thead>
+                <tbody id="registrosBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Modal para Novo/Editar Registro -->
+    <div id="modalRegistro" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Novo Registro</h2>
+            <form id="formRegistro">
+                <input type="hidden" id="registroId">
+                
+                <label for="condutor">Condutor *</label>
+                <input type="text" id="condutor" required class="form-control">
+                
+                <label for="placaVeiculo">Placa do Veículo *</label>
+                <input type="text" id="placaVeiculo" required class="form-control" maxlength="8">
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dataSaida">Data de Saída *</label>
+                        <input type="datetime-local" id="dataSaida" required class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="dataChegada">Data de Chegada *</label>
+                        <input type="datetime-local" id="dataChegada" required class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="kmInicial">KM Inicial *</label>
+                        <input type="number" id="kmInicial" required class="form-control" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="kmFinal">KM Final *</label>
+                        <input type="number" id="kmFinal" required class="form-control" step="0.1">
+                    </div>
+                </div>
+                
+                <label for="observacoes">Observações</label>
+                <textarea id="observacoes" rows="3" class="form-control"></textarea>
+                
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">💾 Salvar</button>
+                    <button type="button" class="btn btn-secondary" id="cancelarBtn">❌ Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal QR Code -->
+    <div id="modalQR" class="modal">
+        <div class="modal-content modal-small">
+            <span class="close">&times;</span>
+            <h2>QR Code - Acesso ao Sistema</h2>
+            <div class="qr-container">
+                <img id="qrImage" src="" alt="QR Code">
+                <p>Escaneie este código para acessar o sistema</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
